@@ -17,12 +17,13 @@ set(BUILD_SINGLE on)
 set(BUILD_DOUBLE on)
 set(BUILD_COMPLEX off)
 set(BUILD_COMPLEX16 off)
-#set(BUILD_SHARED_LIBS on)
+set(BUILD_SHARED_LIBS on)
 set(MUMPS_openmp false)
 set(MUMPS_parallel false)
 set(MUMPS_parmetis false)
 set(MUMPS_scotch false)
 add_definitions(-DWIN32)
+link_directories("C:/Program Files (x86)/Intel/oneAPI/compiler/latest/lib")
 
 project(MUMPS
 LANGUAGES C Fortran
