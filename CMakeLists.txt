@@ -20,8 +20,9 @@ set(BUILD_COMPLEX16 off)
 #set(BUILD_SHARED_LIBS on)
 set(MUMPS_openmp false)
 set(MUMPS_parallel false)
-set(MUMPS_metis false)
+set(MUMPS_parmetis false)
 set(MUMPS_scotch false)
+add_definitions(-DWIN32)
 
 project(MUMPS
 LANGUAGES C Fortran
