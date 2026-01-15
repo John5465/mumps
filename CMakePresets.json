@@ -9,8 +9,7 @@
     "BUILD_SINGLE": false,
     "BUILD_DOUBLE": true,
     "BUILD_COMPLEX": false,
-    "BUILD_COMPLEX16": false,
-    "CMAKE_BUILD_TYPE": "Release"
+    "BUILD_COMPLEX16": false
   }
 }
 ],

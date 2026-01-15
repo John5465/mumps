@@ -10,6 +10,19 @@ if(NOT is_multi_config AND NOT (CMAKE_BUILD_TYPE OR DEFINED ENV{CMAKE_BUILD_TYPE
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Release default" FORCE)
 endif()
 
+set(ENV{MKLROOT} "C:/Program Files (x86)/Intel/oneAPI/mkl/latest")
+set(CMAKE_Fortran_COMPILER "C:/Program Files (x86)/Intel/oneAPI/compiler/latest/bin/ifx.exe")
+set(CMAKE_BUILD_TYPE Debug)
+set(BUILD_SINGLE on)
+set(BUILD_DOUBLE on)
+set(BUILD_COMPLEX off)
+set(BUILD_COMPLEX16 off)
+#set(BUILD_SHARED_LIBS on)
+set(MUMPS_openmp false)
+set(MUMPS_parallel false)
+set(MUMPS_metis false)
+set(MUMPS_scotch false)
+
 project(MUMPS
 LANGUAGES C Fortran
 VERSION 5.8.2.0
