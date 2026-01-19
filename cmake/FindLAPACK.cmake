@@ -485,6 +485,7 @@ set(CMAKE_REQUIRED_FLAGS)
 set(CMAKE_REQUIRED_LINK_OPTIONS)
 set(CMAKE_REQUIRED_INCLUDES ${LAPACK_INCLUDE_DIR})
 set(CMAKE_REQUIRED_LIBRARIES ${LAPACK_LIBRARY})
+set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /names:lowercase")
 
 check_source_compiles(Fortran
 "program check_lapack
@@ -515,6 +516,9 @@ endfunction()
 # --- Check library links
 if(LAPACK_CRAY OR LAPACK_LIBRARY)
   lapack_check()
+  if (LAPACK_links)
+    set(LAPACK_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/extra/OpenBLAS/include")
+  endif()
 endif()
 
 

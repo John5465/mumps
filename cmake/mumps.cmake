@@ -256,12 +256,23 @@ foreach(t IN ITEMS ${a}mumps ${a}mumps_C ${a}mumps_Fortran)
 
 endforeach()
 
-target_link_libraries(${a}mumps PRIVATE
-MPI::MPI_Fortran
-$<$<BOOL:${MUMPS_openmp}>:OpenMP::OpenMP_Fortran>
-)
+if(MSVC)
+  #message(STATUS "----set ${a}mumps lowercases")
+  #set_target_properties(${a}mumps PROPERTIES Fortran_FLAGS "/names:lowercase")
+  target_compile_options(${a}mumps PRIVATE "/names:lowercase")
+  link_directories(${CMAKE_CURRENT_SOURCE_DIR}/extra/OpenBLAS/lib)
+  target_link_libraries(${a}mumps PRIVATE
+  MPI::MPI_Fortran
+  $<$<BOOL:${MUMPS_openmp}>:OpenMP::OpenMP_Fortran>
+  openblas.lib
+  )
+else ()
+  target_link_libraries(${a}mumps PRIVATE
+  MPI::MPI_Fortran
+  $<$<BOOL:${MUMPS_openmp}>:OpenMP::OpenMP_Fortran>
+  )
+endif()
 # this is needed for mpiseq, and is best for clarity and consistency
-
 
 string(TOUPPER ${a} aup)
 

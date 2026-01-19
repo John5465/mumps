@@ -10,20 +10,25 @@ if(NOT is_multi_config AND NOT (CMAKE_BUILD_TYPE OR DEFINED ENV{CMAKE_BUILD_TYPE
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Release default" FORCE)
 endif()
 
-set(ENV{MKLROOT} "C:/Program Files (x86)/Intel/oneAPI/mkl/latest")
-set(CMAKE_Fortran_COMPILER "C:/Program Files (x86)/Intel/oneAPI/compiler/latest/bin/ifx.exe")
 set(CMAKE_BUILD_TYPE Debug)
 set(BUILD_SINGLE on)
 set(BUILD_DOUBLE on)
 set(BUILD_COMPLEX off)
 set(BUILD_COMPLEX16 off)
-set(BUILD_SHARED_LIBS on)
+set(BUILD_SHARED_LIBS off)
 set(MUMPS_openmp false)
 set(MUMPS_parallel false)
 set(MUMPS_parmetis false)
 set(MUMPS_scotch false)
 add_definitions(-DWIN32)
-link_directories("C:/Program Files (x86)/Intel/oneAPI/compiler/latest/lib")
+
+#set(ENV{MKLROOT} "C:/Program Files (x86)/Intel/oneAPI/mkl/latest")
+set(ONEAPI_DIR "C:/Program Files (x86)/Intel/oneAPI")
+set(FORTRAN_DIR "${ONEAPI_DIR}/compiler/latest")
+set(CMAKE_Fortran_COMPILER "${FORTRAN_DIR}/bin/ifx.exe")
+
+set(LAPACK_VENDOR OpenBLAS)
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/extra/OpenBLAS")
 
 project(MUMPS
 LANGUAGES C Fortran
@@ -38,6 +43,16 @@ cmake_policy(SET CMP0168 OLD)
 endif()
 
 enable_testing()
+
+if(MSVC)
+  message(STATUS "---- Compiling Using MSVC")
+  cmake_policy(SET CMP0091 NEW)
+  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /names:lowercase")
+  #link_directories("${FORTRAN_DIR}/lib")
+  #link_directories("${ONEAPI_DIR}/mkl/latest/lib")
+  link_directories("${ONEAPI_DIR}/compiler/latest/lib")
+endif()
 
 include(GNUInstallDirs)
 include(cmake/GitSubmodule.cmake)
