@@ -4,7 +4,7 @@
 "configurePresets": [
 {
   "name": "default",
-  "binaryDir": "${sourceDir}/build",
+  "binaryDir": "${sourceDir}/build_cmake",
   "cacheVariables": {
     "BUILD_SINGLE": false,
     "BUILD_DOUBLE": true,
